@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /app/bootstrap.php.cache
 /app/cache/*
 !app/cache/.gitkeep
@@ -48,4 +47,6 @@
 
 # Composer PHAR
 /composer.phar
->>>>>>> 79d65d2d703e722545fcde6691ac0be452817370
+
+# Idea
+/.idea
