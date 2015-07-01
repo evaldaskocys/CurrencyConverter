@@ -1,0 +1,158 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CurrencySource
+ *
+ * @ORM\Table(name="currency_source")
+ * @ORM\Entity
+ */
+class CurrencySource
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_name", type="string", length=8)
+     */
+    private $shortName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="long_name", type="string", length=255)
+     */
+    private $longName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="date")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Currency", mappedBy="source")
+     */
+    protected $currencies;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set shortName
+     *
+     * @param string $shortName
+     * @return CurrencySource
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get shortName
+     *
+     * @return string 
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
+    }
+
+    /**
+     * Set longName
+     *
+     * @param string $longName
+     * @return CurrencySource
+     */
+    public function setLongName($longName)
+    {
+        $this->longName = $longName;
+
+        return $this;
+    }
+
+    /**
+     * Get longName
+     *
+     * @return string 
+     */
+    public function getLongName()
+    {
+        return $this->longName;
+    }
+
+    /**
+     * Set url
+     *
+     * @param string $url
+     * @return CurrencySource
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string 
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return CurrencySource
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+}

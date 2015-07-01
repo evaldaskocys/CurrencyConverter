@@ -4,6 +4,25 @@ parameters:
 #    parameter_name: value
 
 services:
+
+    ecb_crawler_strategy:
+            class:        AppBundle\Utils\ECBCrawlerStrategy
+
+    crawler_ecb:
+            class:        AppBundle\Services\Crawler
+            arguments: [@ecb_crawler_strategy]
+
+    ecb_conversion_strategy:
+            class:        AppBundle\Utils\ECBConversionStrategy
+
+    converter_ecb:
+            class:        AppBundle\Services\Converter
+            arguments: [@ecb_conversion_strategy, @doctrine.orm.entity_manager]
+
+    #converter_seb:
+    #        class:        AppBundle\Services\Converter
+    #        arguments: ["@seb_conversion_strategy", "@doctrine.orm.entity_manager"]
+
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

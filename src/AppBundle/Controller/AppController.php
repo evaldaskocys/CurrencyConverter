@@ -2,8 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\ConverterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+
+
 
 class AppController extends Controller
 {
@@ -12,8 +16,17 @@ class AppController extends Controller
      *
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render('pages/index.html.twig');
+        $form = $this->createForm(new ConverterType());
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+        }
+
+        return $this->render('pages/index.html.twig', array (
+                'form' => $form->createView(),
+            )
+        );
     }
 }

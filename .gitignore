@@ -50,3 +50,19 @@
 
 # Idea
 /.idea
+
+# Bower / npm
+/bower_components
+/npm-debug.log
+/node_modules/
+
+# Grunt
+/build/
+/web/fonts/
+/web/img/
+/web/css/
+/web/js/
+/.sass-cache/*
+
+# Backup files
+/*~
