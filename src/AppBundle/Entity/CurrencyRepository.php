@@ -41,4 +41,18 @@ class CurrencyRepository extends EntityRepository
         return $query->getSingleResult();
     }
 
+    public function findAllCurrenciesForChoiceField()
+    {
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.currency', 'ASC')
+            ->groupBy('c.currency')
+            ->getQuery();
+
+        $currencyChoices = array();
+        foreach($query->getResult() as $uniqueCurrency){
+            $currencyChoices[$uniqueCurrency->getCurrency()] = $uniqueCurrency->getCurrency();
+        }
+        return $currencyChoices;
+    }
+
 }

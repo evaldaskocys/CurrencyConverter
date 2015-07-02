@@ -15,10 +15,7 @@ class AppController extends Controller
      */
     public function indexAction()
     {
-        $dateChoices = $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Currency')->findAllDatesForChoiceField();
-
-        $form = $this->createForm(new ConverterType($dateChoices));
+        $form = $this->createForm(new ConverterType($this->getDoctrine()->getEntityManager()));
 
         return $this->render('pages/index.html.twig', array (
                 'form' => $form->createView(),

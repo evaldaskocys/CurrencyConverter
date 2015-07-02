@@ -2,4 +2,28 @@
 
 {% block body %}
     {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+    <div class="row">
+        <h2 id="result"></h2>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $( ".form-control" ).change(function() {
+            $.ajax({
+                type: "POST",
+                url: Routing.generate('convertCurrency', {
+                    date: $('#converter_date').val(),
+                    amount: $('#converter_amount').val(),
+                    currencySell: $('#converter_sellCurrency').val(),
+                    currencyBuy: $('#converter_buyCurrency').val()
+                })
+            })
+            .success(function( data ) {
+                $('#result').html(data);
+            });
+        });
+    </script>
 {% endblock %}

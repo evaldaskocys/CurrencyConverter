@@ -24,12 +24,11 @@ class Converter {
     }
 
     /**
-     * Convert
-     *
      * @param $date
      * @param $amount
      * @param $currencyFrom
      * @param $currencyTo
+     * @return string
      */
     public function convert($date, $amount, $currencyFrom, $currencyTo)
     {

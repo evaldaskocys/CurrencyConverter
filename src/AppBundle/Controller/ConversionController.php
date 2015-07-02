@@ -11,9 +11,16 @@ class ConversionController extends Controller
     /**
      * Converts currencies and outputs result in json format
      *
-     * @Route("/currency/convert/ECB", name="currencyConvert")
+     * @param $date
+     * @param $amount
+     * @param $currencySell
+     * @param $currencyBuy
+     * @return JsonResponse
+     * @throws \Exception
+     *
+     * @Route("/convert_currency/ECB/{date}/{amount}/{currencySell}/{currencyBuy}", name="convertCurrency", options={"expose"=true})
      */
-    public function convetECBAction($date, $amount, $currencySell, $currencyBuy)
+    public function convertECBAction($date, $amount, $currencySell, $currencyBuy)
     {
         $result = $this->get('converter_ecb')->convert($date, $amount, $currencySell, $currencyBuy);
 

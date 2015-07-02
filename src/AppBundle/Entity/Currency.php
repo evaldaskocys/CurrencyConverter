@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Currency
  *
- * @ORM\Table(name="currency")
+ * @ORM\Table(name="currency", indexes={@ORM\Index(name="currencyIndex", columns={"currency"}),@ORM\Index(name="sourceShortNameIndex", columns={"source_short_name"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\CurrencyRepository")
  * @ORM\HasLifecycleCallbacks()
  */
