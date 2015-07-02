@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ConversionController extends Controller
 {
@@ -16,7 +17,8 @@ class ConversionController extends Controller
     {
         $result = $this->get('converter_ecb')->convert($date, $amount, $currencySell, $currencyBuy);
 
-        // return json
-        echo $result;
+        $response = new JsonResponse();
+        $response->setData($result);
+        return $response;
     }
 }

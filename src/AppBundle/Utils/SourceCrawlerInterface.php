@@ -12,5 +12,11 @@ interface SourceCrawlerInterface
 
     public function getDecimal();
 
+    public function getPoint();
+
+    public function getThousandsSep();
+
+    public function getRoundMode();
+
     public function getElements();
 }

@@ -5,9 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Form\Type\ConverterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-
-
 
 class AppController extends Controller
 {
@@ -16,13 +13,12 @@ class AppController extends Controller
      *
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        $form = $this->createForm(new ConverterType());
-        $form->handleRequest($request);
-        if ($form->isValid()) {
+        $dateChoices = $repository = $this->getDoctrine()
+            ->getRepository('AppBundle:Currency')->findAllDatesForChoiceField();
 
-        }
+        $form = $this->createForm(new ConverterType($dateChoices));
 
         return $this->render('pages/index.html.twig', array (
                 'form' => $form->createView(),

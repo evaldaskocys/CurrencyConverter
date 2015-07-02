@@ -12,13 +12,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class CurrencyRepository extends EntityRepository
 {
-    public function findOneByCurrencyAndSourceAndDate($currency, $sourceShortName, $date)
+    public function findAllDatesForChoiceField()
     {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT p FROM AppBundle:Product p ORDER BY p.name ASC'
-            )
-            ->getSingleResult();
+        $query = $this->createQueryBuilder('c')
+            ->orderBy('c.createdAt', 'DESC')
+            ->groupBy('c.createdAt')
+            ->getQuery();
+
+        $dateChoices = array();
+        foreach($query->getResult() as $uniqueDateCurrency){
+            $dateChoices[$uniqueDateCurrency->getCreatedAt()->format("Y-m-d")] = $uniqueDateCurrency->getCreatedAt()->format("Y-m-d");
+        }
+        return $dateChoices;
+    }
+
+    public function findRateByDateAndShortNameAndCurrency($date, $shortName, $currency)
+    {
+        $query = $this->createQueryBuilder('c')
+            ->select('c')
+            ->where('c.createdAt = :date')
+            ->andWhere('c.sourceShortName = :shortName')
+            ->andWhere('c.currency = :currency')
+            ->setParameter('date', $date)
+            ->setParameter('shortName', $shortName)
+            ->setParameter('currency', $currency)
+            ->getQuery();
+
+        return $query->getSingleResult();
     }
 
 }
