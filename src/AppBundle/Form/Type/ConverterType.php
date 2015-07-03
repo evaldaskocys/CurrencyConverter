@@ -25,18 +25,22 @@ class ConverterType extends AbstractType
         $builder
             ->add('date', 'choice', array(
                     'choices' => $this->choicesForDate,
-                    'label' => 'Data'
+                    'label' => 'Data',
+                    'attr' => array('class'=>'disable-enter calculate-select'),
                 ))
             ->add('sellCurrency', 'choice', array(
                     'choices' => $this->choicesForCurrency,
                     'label' => 'Parduodama valiuta',
+                    'attr' => array('class'=>'disable-enter calculate-select'),
                 ))
             ->add('amount','number', array(
-                    'label' => 'Parduodama suma'
+                    'label' => 'Parduodama suma',
+                    'attr' => array('class'=>'disable-enter allow-numbers'),
                 ))
             ->add('buyCurrency', 'choice', array(
                     'choices' => $this->choicesForCurrency,
                     'label' => 'Perkama valiuta',
+                    'attr' => array('class'=>'disable-enter calculate-select'),
                 ));
     }
 

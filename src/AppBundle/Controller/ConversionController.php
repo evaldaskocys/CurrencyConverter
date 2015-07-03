@@ -18,9 +18,9 @@ class ConversionController extends Controller
      * @return JsonResponse
      * @throws \Exception
      *
-     * @Route("/convert_currency/ECB/{date}/{amount}/{currencySell}/{currencyBuy}", name="convertCurrency", options={"expose"=true})
+     * @Route("/convert_currency/ECB/{date}/{currencySell}/{currencyBuy}/{amount}", name="convertCurrency", options={"expose"=true})
      */
-    public function convertECBAction($date, $amount, $currencySell, $currencyBuy)
+    public function convertECBAction($date, $currencySell, $currencyBuy, $amount=0)
     {
         $result = $this->get('converter_ecb')->convert($date, $amount, $currencySell, $currencyBuy);
 

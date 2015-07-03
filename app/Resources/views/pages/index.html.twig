@@ -1,17 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_errors(form) }}
 
-    <div class="row">
-        <h2 id="result"></h2>
+    {{ form_row(form.date) }}
+    {{ form_row(form.amount) }}
+    {{ form_row(form.sellCurrency) }}
+    {{ form_row(form.buyCurrency) }}
+    {{ form_widget(form._token) }}
+    <div class="form-group">
+        <label class="control-label required" for="result">Rezultatas</label>
+        <div id="result">
+            <span id="money">{{ zeros }}</span> <span id="currencyCode"></span>
+        </div>
     </div>
+
+    {{ form_end(form) }}
+
+
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        $( ".form-control" ).change(function() {
+
+        $( document ).ready(function() {
+
+            setResultCurrency();
+
+            $( ".calculate-select" ).change(function() {
+                calculate();
+            });
+
+            $('.disable-enter').on('keydown', function(e) {
+                disableEnter(e);
+            });
+
+            $('.allow-numbers').on('keyup', function(e) {
+                replaceLetters();
+                calculate();
+            });
+            $(".allow-numbers").bind({
+                paste: function () {
+                    replaceLetters();
+                    calculate();
+                }
+            });
+        });
+
+        function calculate(){
             $.ajax({
                 type: "POST",
                 url: Routing.generate('convertCurrency', {
@@ -22,8 +60,48 @@
                 })
             })
             .success(function( data ) {
-                $('#result').html(data);
+                $('#result>#money').html(data);
+                setResultCurrency();
             });
-        });
+
+        }
+        function setResultCurrency() {
+            $('#result>#currencyCode').html($('#converter_buyCurrency').val());
+        }
+
+        function disableEnter(e){
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                e.preventDefault();
+                return false;
+            }
+        }
+
+        function is_numeric(strString) {
+            var blnResult = true;
+            if (isNaN(strString)) {
+                blnResult = false;
+            }
+            return blnResult;
+        }
+
+        function replaceLetters(){
+
+            var amount_input = $('#converter_amount');
+            var amount = $('#converter_amount').val();
+            if (!is_numeric(amount)) {
+                amount = amount.replace(/[^\d.]/g, '');
+                while (!is_numeric(amount)) {
+                    amount = amount.slice(0, -1);
+                }
+                amount_input.val(amount);
+            } else {
+                if (amount < 0) {
+                    amount = amount.replace(/[^\d.]/g, '');
+                    amount_input.val(amount);
+                }
+            }
+
+        }
     </script>
 {% endblock %}
