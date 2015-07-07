@@ -7,14 +7,23 @@
     {{ form_row(form.date) }}
     {{ form_row(form.amount) }}
     {{ form_row(form.sellCurrency) }}
+
+    <p class="text-right">
+        <button id="swapCurrencies" type="button" class="btn btn-default btn-xs">
+            <span class="glyphicon glyphicon-sort" aria-hidden="true"></span> Sukeisti valiutą vietomis
+        </button>
+    </p>
+
     {{ form_row(form.buyCurrency) }}
     {{ form_widget(form._token) }}
+
     <div class="form-group">
         <label class="control-label required" for="result">Rezultatas</label>
         <div id="result">
             <span id="money"></span> <span id="currencyCode"></span> <span id="message"></span>
         </div>
     </div>
+
     {{ form_end(form) }}
 {% endblock %}
 
@@ -27,6 +36,9 @@
             $( ".calculate-select" ).change(function() {
                 calculate();
             });
+            $( "#swapCurrencies").click(function(){
+                swapCurrencies();
+            })
             $('.disable-enter').on('keydown', function(e) {
                 disableEnter(e);
             });
@@ -43,9 +55,7 @@
         });
 
         function calculate(){
-
             clearResultData();
-            //validateInputs();
 
             $.ajax({
                 type: "POST",
@@ -65,20 +75,11 @@
                     $('#result>#message').html(data.message);
                 }
             });
-
         }
 
         function clearResultData() {
             $('#result span').html("");
         }
-
-        /*function validateInputs() {
-            if (!is_date($('#converter_date').val())) {
-                addError($('#converter_date'));
-            } else {
-                removeError($('#converter_date'));
-            }
-        }*/
 
         function disableEnter(e){
             var code = e.keyCode || e.which;
@@ -88,11 +89,6 @@
             }
         }
 
-        /*function is_date(date) {
-            var dateReg = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-            return date.match(dateReg);
-        }*/
-
         function is_numeric(strString) {
             if (isNaN(strString)) {
                 return false;
@@ -100,15 +96,7 @@
             return true;
         }
 
-        /*function addError(element) {
-            element.closest('form-group').addClass('has-error');
-        }
-        function removeError(element) {
-            element.closest('form-group').removeClass('has-error');
-        }*/
-
         function replaceLetters(){
-
             var amount_input = $('#converter_amount');
             var amount = amount_input.val();
             if (!is_numeric(amount)) {
@@ -123,7 +111,13 @@
                     amount_input.val(amount);
                 }
             }
+        }
 
+        function swapCurrencies(){
+            var valueSell = $('#converter_sellCurrency').val();
+            $('#converter_sellCurrency').val($('#converter_buyCurrency').val());
+            $('#converter_buyCurrency').val(valueSell);
+            calculate();
         }
     </script>
 {% endblock %}
