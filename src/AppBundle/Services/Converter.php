@@ -3,7 +3,6 @@
 namespace AppBundle\Services;
 
 use AppBundle\Utils\SourceConversionInterface;
-use AppBundle\Utils\SourceCrawlerInterface;
 use Doctrine\ORM\EntityManager;
 
 
@@ -21,10 +20,10 @@ class Converter {
 
     /**
      *
-     * @param SourceCrawlerInterface $conversion
+     * @param SourceConversionInterface $conversion
      * @param EntityManager $entityManager
      */
-    public function __construct(SourceCrawlerInterface $conversion, EntityManager $entityManager)
+    public function __construct(SourceConversionInterface $conversion, EntityManager $entityManager)
     {
         $this->conversion = $conversion;
         $this->em = $entityManager;
@@ -40,10 +39,10 @@ class Converter {
     public function convert($date, $amount, $currencyCodeFrom, $currencyCodeTo)
     {
         $currencyFrom = $this->getCurrencyRateBySourceAndDate($currencyCodeFrom, $date);
+        dump($currencyFrom);
         $currencyTo= $this->getCurrencyRateBySourceAndDate($currencyCodeTo, $date);
         $this->validateAmount($amount);
 
-        dump($this->response);
         if ($this->response['valid']){
             $this->response['amount'] = $this->makeConversion($amount, $currencyFrom->getRate(), $currencyTo->getRate());
             $this->response['currency'] = $currencyTo->getCurrency();
@@ -56,14 +55,10 @@ class Converter {
      *
      * @param $currency
      * @param $date
-     * @return int|mixed
+     * @return mixed
      */
     private function getCurrencyRateBySourceAndDate($currency, $date)
     {
-        if ($currency == "EUR"){
-            return 1;
-        }
-
         if (is_null($rate = $this->em->getRepository('AppBundle:Currency')->findRateByDateAndShortNameAndCurrency($date, $this->conversion->getShortName(), $currency))) {
             $this->response['valid'] = false;
             $this->response['message'] .= "Valiutos ".$currency." kursas ".$date." datai nerastas. ";

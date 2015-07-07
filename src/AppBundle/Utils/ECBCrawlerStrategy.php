@@ -5,16 +5,18 @@ namespace AppBundle\Utils;
 class ECBCrawlerStrategy implements SourceCrawlerInterface
 {
     const URL = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
+    const BASE_CURRENCY = "EUR";
     const SHORT_NAME = "ECB";
     const LONG_NAME = "European central bank";
-    const DECIMAL = 2;
-    const POINT = ".";
-    const THOUSANDS_SEP = "";
-    const ROUND = PHP_ROUND_HALF_UP;
 
     public function getShortName()
     {
         return self::SHORT_NAME;
+    }
+
+    public function getBaseCurrency()
+    {
+        return self::BASE_CURRENCY;
     }
 
     public function getRemoteUrl()
@@ -25,26 +27,6 @@ class ECBCrawlerStrategy implements SourceCrawlerInterface
     public function getLongName()
     {
         return self::LONG_NAME;
-    }
-
-    public function getDecimal()
-    {
-        return self::DECIMAL;
-    }
-
-    public function getPoint()
-    {
-        return self::POINT;
-    }
-
-    public function getThousandsSep()
-    {
-        return self::THOUSANDS_SEP;
-    }
-
-    public function getRoundMode()
-    {
-        return self::ROUND;
     }
 
     public function getElements()

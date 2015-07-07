@@ -6,10 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use AppBundle\Entity\Source;
 use AppBundle\Entity\Currency;
 
 class UpdateRatesCommand extends ContainerAwareCommand
 {
+
+
     protected function configure()
     {
         $this
@@ -20,27 +23,37 @@ class UpdateRatesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $crawler = $this->getContainer()->get('crawler_ecb');
+        $em = $this->getContainer()->get('doctrine')->getManager();
+
+        $source = $this->createSource($crawler->getShortName(), $crawler->getRemoteUrl());
+        $em->persist($source);
+
+        // create entry for base currency
+        $baseCurrency = $this->createCurrency(1, $crawler->getBaseCurrency(), $source);
+        $em->persist($baseCurrency);
 
         foreach ($crawler->getRates() as $rate) {
-            $currency = $this->createCurrency($rate, $crawler->getShortName());
-            $this->persistCurrency($currency);
+            $currency = $this->createCurrency($rate['rate'], $rate['currency'], $source);
+            $em->persist($currency);
         }
-        $output->writeln('Updated currency rates for ' . $crawler->getShortName() . '.');
+        $em->flush();
+        $output->writeln('Updated currency rates for ' . $crawler->getLongName() . '.');
     }
 
-    private function createCurrency($rate, $sourceShortName)
+    protected function createSource($sourceShortName, $remoteUrl)
+    {
+        $source = new Source();
+        $source->setShortCode($sourceShortName)
+            ->setUrl($remoteUrl);
+        return $source;
+    }
+
+    protected function createCurrency($rate, $currencyCode, Source $source)
     {
         $currency = new Currency();
-        $currency->setSourceShortName($sourceShortName)
-            ->setRate($rate['rate'])
-            ->setCurrency($rate['currency']);
+        $currency->setSource($source)
+            ->setRate($rate)
+            ->setCurrency($currencyCode);
         return $currency;
-    }
-
-    private function persistCurrency($currency)
-    {
-        $em = $this->getContainer()->get('doctrine')->getManager();
-        $em->persist($currency);
-        $em->flush();
     }
 }

@@ -32,4 +32,28 @@ class Crawler {
     {
         return $this->crawlerStrategy->getShortName();
     }
+
+    /**
+     * @return string
+     */
+    public function getLongName()
+    {
+        return $this->crawlerStrategy->getLongName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getRemoteUrl()
+    {
+        return $this->crawlerStrategy->getRemoteUrl();
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseCurrency()
+    {
+        return $this->crawlerStrategy->getBaseCurrency();
+    }
 }

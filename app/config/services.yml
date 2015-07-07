@@ -17,7 +17,11 @@ services:
 
     converter_ecb:
             class:        AppBundle\Services\Converter
-            arguments: [@ecb_crawler_strategy, @doctrine.orm.entity_manager]
+            arguments: [@ecb_conversion_strategy, @doctrine.orm.entity_manager]
+
+    #crawler_seb:
+    #        class:        AppBundle\Services\Converter
+    #        arguments: ["@seb_crawler_strategy", "@doctrine.orm.entity_manager"]
 
     #converter_seb:
     #        class:        AppBundle\Services\Converter
