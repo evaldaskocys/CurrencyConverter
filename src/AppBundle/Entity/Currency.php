@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Currency
  *
- * @ORM\Table(name="currency", indexes={@ORM\Index(name="currencyIndex", columns={"currency"}),@ORM\Index(name="sourceShortNameIndex", columns={"source_short_name"})})
+ * @ORM\Table(name="currency", indexes={@ORM\Index(name="currencyIndex", columns={"currency"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\CurrencyRepository")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -23,11 +23,11 @@ class Currency
     private $id;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="source_short_name", type="string", length=3)
+     * @ORM\Column(name="source_id", type="integer")
      */
-    private $sourceShortName;
+    private $sourceId;
 
     /**
      * @var float
@@ -44,11 +44,10 @@ class Currency
     private $currency;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="date")
+     * @ORM\ManyToOne(targetEntity="Source", inversedBy="currencies")
+     * @ORM\JoinColumn(name="source_id", referencedColumnName="id")
      */
-    private $createdAt;
+    protected $source;
 
     /**
      * Get id
@@ -61,14 +60,14 @@ class Currency
     }
 
     /**
-     * Set sourceShortName
+     * Set sourceId
      *
-     * @param integer $sourceShortName
+     * @param integer $sourceId
      * @return Currency
      */
-    public function setSourceShortName($sourceShortName)
+    public function setSourceId($sourceId)
     {
-        $this->sourceShortName = $sourceShortName;
+        $this->sourceId = $sourceId;
 
         return $this;
     }
@@ -80,7 +79,7 @@ class Currency
      */
     public function getSourceId()
     {
-        return $this->sourceShortName;
+        return $this->sourceId;
     }
 
     /**
@@ -129,32 +128,31 @@ class Currency
         return $this->currency;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @return CurrencySource
-     *
-     * @ORM\PrePersist
-     */
-    public function setCreatedAt()
+    public function __toString()
     {
-        $this->createdAt = new \DateTime();
+        return $this->getCurrency();
+    }
+
+    /**
+     * Set source
+     *
+     * @param \AppBundle\Entity\Source $source
+     * @return Currency
+     */
+    public function setSource(\AppBundle\Entity\Source $source = null)
+    {
+        $this->source = $source;
 
         return $this;
     }
 
     /**
-     * Get createdAt
+     * Get source
      *
-     * @return \DateTime
+     * @return \AppBundle\Entity\Source 
      */
-    public function getCreatedAt()
+    public function getSource()
     {
-        return $this->createdAt;
-    }
-
-    public function __toString()
-    {
-        return $this->getCurrency();
+        return $this->source;
     }
 }

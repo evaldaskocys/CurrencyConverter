@@ -12,13 +12,10 @@
     <div class="form-group">
         <label class="control-label required" for="result">Rezultatas</label>
         <div id="result">
-            <span id="money">{{ zeros }}</span> <span id="currencyCode"></span>
+            <span id="money"></span> <span id="currencyCode"></span> <span id="message"></span>
         </div>
     </div>
-
     {{ form_end(form) }}
-
-
 {% endblock %}
 
 {% block javascripts %}
@@ -27,16 +24,12 @@
 
         $( document ).ready(function() {
 
-            setResultCurrency();
-
             $( ".calculate-select" ).change(function() {
                 calculate();
             });
-
             $('.disable-enter').on('keydown', function(e) {
                 disableEnter(e);
             });
-
             $('.allow-numbers').on('keyup', function(e) {
                 replaceLetters();
                 calculate();
@@ -50,24 +43,42 @@
         });
 
         function calculate(){
+
+            clearResultData();
+            //validateInputs();
+
             $.ajax({
                 type: "POST",
-                url: Routing.generate('convertCurrency', {
+                url: Routing.generate('convertCurrency'),
+                data: {
                     date: $('#converter_date').val(),
                     amount: $('#converter_amount').val(),
                     currencySell: $('#converter_sellCurrency').val(),
                     currencyBuy: $('#converter_buyCurrency').val()
-                })
+                }
             })
             .success(function( data ) {
-                $('#result>#money').html(data);
-                setResultCurrency();
+                if (data.valid) {
+                    $('#result>#money').html(data.amount);
+                    $('#result>#currencyCode').html(data.currency);
+                } else {
+                    $('#result>#message').html(data.message);
+                }
             });
 
         }
-        function setResultCurrency() {
-            $('#result>#currencyCode').html($('#converter_buyCurrency').val());
+
+        function clearResultData() {
+            $('#result span').html("");
         }
+
+        /*function validateInputs() {
+            if (!is_date($('#converter_date').val())) {
+                addError($('#converter_date'));
+            } else {
+                removeError($('#converter_date'));
+            }
+        }*/
 
         function disableEnter(e){
             var code = e.keyCode || e.which;
@@ -77,18 +88,29 @@
             }
         }
 
+        /*function is_date(date) {
+            var dateReg = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+            return date.match(dateReg);
+        }*/
+
         function is_numeric(strString) {
-            var blnResult = true;
             if (isNaN(strString)) {
-                blnResult = false;
+                return false;
             }
-            return blnResult;
+            return true;
         }
+
+        /*function addError(element) {
+            element.closest('form-group').addClass('has-error');
+        }
+        function removeError(element) {
+            element.closest('form-group').removeClass('has-error');
+        }*/
 
         function replaceLetters(){
 
             var amount_input = $('#converter_amount');
-            var amount = $('#converter_amount').val();
+            var amount = amount_input.val();
             if (!is_numeric(amount)) {
                 amount = amount.replace(/[^\d.]/g, '');
                 while (!is_numeric(amount)) {

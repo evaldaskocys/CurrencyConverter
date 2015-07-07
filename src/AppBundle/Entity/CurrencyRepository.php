@@ -12,47 +12,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class CurrencyRepository extends EntityRepository
 {
-    public function findAllDatesForChoiceField()
-    {
-        $query = $this->createQueryBuilder('c')
-            ->orderBy('c.createdAt', 'DESC')
-            ->groupBy('c.createdAt')
-            ->getQuery();
-
-        $dateChoices = array();
-        foreach($query->getResult() as $uniqueDateCurrency){
-            $dateChoices[$uniqueDateCurrency->getCreatedAt()->format("Y-m-d")] = $uniqueDateCurrency->getCreatedAt()->format("Y-m-d");
-        }
-        return $dateChoices;
-    }
-
     public function findRateByDateAndShortNameAndCurrency($date, $shortName, $currency)
     {
-        $query = $this->createQueryBuilder('c')
-            ->select('c')
-            ->where('c.createdAt = :date')
-            ->andWhere('c.sourceShortName = :shortName')
-            ->andWhere('c.currency = :currency')
-            ->setParameter('date', $date)
-            ->setParameter('shortName', $shortName)
+        $query = $this->getEntityManager()
+            ->createQuery(
+                'SELECT c FROM AppBundle:Source s
+                JOIN AppBundle:Currency c
+                WHERE s.createdAt = :date AND s.shortCode = :short_code AND c.currency = :currency'
+            )->setParameter('date', $date)
+            ->setParameter('short_code', $shortName)
             ->setParameter('currency', $currency)
-            ->getQuery();
+            ->setMaxResults(1);
 
-        return $query->getSingleResult();
+        return $query->getOneOrNullResult();
     }
 
     public function findAllCurrenciesForChoiceField()
     {
         $query = $this->createQueryBuilder('c')
+            ->select('c.currency')
             ->orderBy('c.currency', 'ASC')
             ->groupBy('c.currency')
             ->getQuery();
 
         $currencyChoices = array();
         foreach($query->getResult() as $uniqueCurrency){
-            $currencyChoices[$uniqueCurrency->getCurrency()] = $uniqueCurrency->getCurrency();
+            $currencyChoices[$uniqueCurrency['currency']] = $uniqueCurrency['currency'];
         }
         return $currencyChoices;
     }
-
 }

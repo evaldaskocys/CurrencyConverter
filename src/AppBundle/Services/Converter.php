@@ -9,6 +9,13 @@ use Doctrine\ORM\EntityManager;
 
 class Converter {
 
+    private $response = array(
+        'valid' => true,
+        'amount' => 0,
+        'currency' => '',
+        'message' => ''
+    );
+
     private $conversion;
     private $em;
 
@@ -26,16 +33,22 @@ class Converter {
     /**
      * @param $date
      * @param $amount
-     * @param $currencyFrom
-     * @param $currencyTo
+     * @param $currencyCodeFrom
+     * @param $currencyCodeTo
      * @return string
      */
-    public function convert($date, $amount, $currencyFrom, $currencyTo)
+    public function convert($date, $amount, $currencyCodeFrom, $currencyCodeTo)
     {
-        $currencyFrom = $this->getCurrencyRateBySourceAndDate($currencyFrom, $date);
-        $currencyTo= $this->getCurrencyRateBySourceAndDate($currencyTo, $date);
+        $currencyFrom = $this->getCurrencyRateBySourceAndDate($currencyCodeFrom, $date);
+        $currencyTo= $this->getCurrencyRateBySourceAndDate($currencyCodeTo, $date);
+        $this->validateAmount($amount);
 
-        return $this->makeConversion($amount, $currencyFrom->getRate(), $currencyTo->getRate());
+        dump($this->response);
+        if ($this->response['valid']){
+            $this->response['amount'] = $this->makeConversion($amount, $currencyFrom->getRate(), $currencyTo->getRate());
+            $this->response['currency'] = $currencyTo->getCurrency();
+        }
+        return $this->response;
     }
 
     /**
@@ -50,17 +63,12 @@ class Converter {
         if ($currency == "EUR"){
             return 1;
         }
-        return $this->em->getRepository('AppBundle:Currency')->findRateByDateAndShortNameAndCurrency($date, $this->conversion->getShortName(), $currency);
-    }
 
-    /**
-     * Returns zeros formatted by conversion rules
-     *
-     * @return string
-     */
-    public function getFormattedZeros()
-    {
-        return number_format(0, $this->conversion->getDecimal(), $this->conversion->getPoint(), $this->conversion->getThousandsSep());
+        if (is_null($rate = $this->em->getRepository('AppBundle:Currency')->findRateByDateAndShortNameAndCurrency($date, $this->conversion->getShortName(), $currency))) {
+            $this->response['valid'] = false;
+            $this->response['message'] .= "Valiutos ".$currency." kursas ".$date." datai nerastas. ";
+        }
+        return $rate;
     }
 
     /**
@@ -73,21 +81,32 @@ class Converter {
      */
     private function makeConversion($amount, $rateFrom, $rateTo)
     {
-        $amountInEuro = $this->convertToEuro($amount, $rateFrom);
-        return number_format(round(($amountInEuro * $rateTo), $this->conversion->getDecimal() , $this->conversion->getRoundMode()), $this->conversion->getDecimal(), $this->conversion->getPoint(), $this->conversion->getThousandsSep());
+        $amountInBaseCurrency = $this->convertToBaseCurrency($amount, $rateFrom);
+        return number_format(round(($amountInBaseCurrency * $rateTo), $this->conversion->getDecimal() , $this->conversion->getRoundMode()), $this->conversion->getDecimal(), $this->conversion->getPoint(), $this->conversion->getThousandsSep());
     }
 
     /**
-     * Converts provided amount to euro
+     * Converts provided amount to base currency of the source
      *
      * @param $amount
      * @param $rate
      * @return float
      */
-    private function convertToEuro($amount, $rate)
+    private function convertToBaseCurrency($amount, $rate)
     {
         return $amount / $rate;
     }
 
+    /**
+     * Checks if amount is a valid number for currency
+     *
+     * @param $amount
+     */
+    private function validateAmount($amount)
+    {
+        if (!is_numeric($amount) || $amount < 0) {
+            $this->response['valid'] = false;
+        }
+    }
 
 } 

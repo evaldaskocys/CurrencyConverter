@@ -10,22 +10,22 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ConverterType extends AbstractType
 {
     private $em;
-    private $choicesForDate;
     private $choicesForCurrency;
 
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
-        $this->choicesForDate = $this->getChoicesForDate();
         $this->choicesForCurrency = $this->getChoicesForCurrency();
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', 'choice', array(
-                    'choices' => $this->choicesForDate,
-                    'label' => 'Data',
+            ->add('date', 'date', array(
+                    'label' => 'Kurso data',
+                    'widget' => 'single_text',
+                    'format' => 'yyyy-MM-dd',
+                    'data' => new \DateTime(),
                     'attr' => array('class'=>'disable-enter calculate-select'),
                 ))
             ->add('sellCurrency', 'choice', array(
@@ -47,11 +47,6 @@ class ConverterType extends AbstractType
     public function getName()
     {
         return 'converter';
-    }
-
-    private function getChoicesForDate()
-    {
-        return $this->em->getRepository('AppBundle:Currency')->findAllDatesForChoiceField();
     }
 
     private function getChoicesForCurrency()

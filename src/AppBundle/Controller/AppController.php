@@ -19,7 +19,6 @@ class AppController extends Controller
 
         return $this->render('pages/index.html.twig', array (
                 'form' => $form->createView(),
-                'zeros' => $this->get('converter_ecb')->getFormattedZeros(),
             )
         );
     }
