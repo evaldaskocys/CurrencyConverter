@@ -16,8 +16,8 @@ class AppController extends Controller
     public function indexAction()
     {
         $form = $this->createForm(new ConverterType($this->getDoctrine()->getEntityManager()));
-
-        return $this->render('pages/index.html.twig', array (
+        $this->get('converter_ecb')->convert('2015-07-06', 13.35, 'EUR', 'USD');
+        return $this->render('pages/index.html.twig', array(
                 'form' => $form->createView(),
             )
         );

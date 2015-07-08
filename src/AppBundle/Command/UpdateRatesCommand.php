@@ -11,8 +11,6 @@ use AppBundle\Entity\Currency;
 
 class UpdateRatesCommand extends ContainerAwareCommand
 {
-
-
     protected function configure()
     {
         $this
@@ -23,7 +21,7 @@ class UpdateRatesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $crawler = $this->getContainer()->get('crawler_ecb');
-        $em = $this->getContainer()->get('doctrine')->getManager();
+        $em = $this->getEntityManager();
 
         $source = $this->createSource($crawler->getShortName(), $crawler->getRemoteUrl());
         $em->persist($source);
@@ -55,5 +53,10 @@ class UpdateRatesCommand extends ContainerAwareCommand
             ->setRate($rate)
             ->setCurrency($currencyCode);
         return $currency;
+    }
+
+    protected function getEntityManager()
+    {
+        return $this->getContainer()->get('doctrine')->getManager();
     }
 }

@@ -33,7 +33,7 @@ class ConverterType extends AbstractType
                     'label' => 'Parduodama valiuta',
                     'attr' => array('class'=>'disable-enter calculate-select'),
                 ))
-            ->add('amount','number', array(
+            ->add('amount', 'number', array(
                     'label' => 'Parduodama suma',
                     'attr' => array('class'=>'disable-enter allow-numbers'),
                 ))

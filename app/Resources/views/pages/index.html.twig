@@ -42,7 +42,7 @@
             $('.disable-enter').on('keydown', function(e) {
                 disableEnter(e);
             });
-            $('.allow-numbers').on('keyup', function(e) {
+            $('.allow-numbers').on('keyup', function() {
                 replaceLetters();
                 calculate();
             });
@@ -56,7 +56,6 @@
 
         function calculate(){
             clearResultData();
-
             $.ajax({
                 type: "POST",
                 url: Routing.generate('convertCurrency'),
@@ -89,19 +88,12 @@
             }
         }
 
-        function is_numeric(strString) {
-            if (isNaN(strString)) {
-                return false;
-            }
-            return true;
-        }
-
         function replaceLetters(){
             var amount_input = $('#converter_amount');
             var amount = amount_input.val();
-            if (!is_numeric(amount)) {
+            if (isNaN(amount)) {
                 amount = amount.replace(/[^\d.]/g, '');
-                while (!is_numeric(amount)) {
+                while (isNaN(amount)) {
                     amount = amount.slice(0, -1);
                 }
                 amount_input.val(amount);
