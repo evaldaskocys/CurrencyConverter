@@ -20,33 +20,33 @@ class Source
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="short_code", type="string", length=3)
      */
-    private $shortCode;
+    protected $shortCode;
 
     /**
      * @var string
      *
      * @ORM\Column(name="url", type="text")
      */
-    private $url;
+    protected $url;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="date")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Currency", mappedBy="source")
      */
-    private $currencies;
+    protected $currencies;
 
     /**
      * Get id

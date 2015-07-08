@@ -7,7 +7,7 @@ use AppBundle\Utils\ECBCrawlerStrategy;
 
 class Crawler {
 
-    private $crawlerStrategy;
+    protected $crawlerStrategy;
 
     /**
      * @param ECBCrawlerStrategy $crawlerStrategy

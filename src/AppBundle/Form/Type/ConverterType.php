@@ -9,8 +9,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ConverterType extends AbstractType
 {
-    private $em;
-    private $choicesForCurrency;
+    protected $em;
+    protected $choicesForCurrency;
 
     public function __construct(EntityManager $em)
     {
@@ -49,7 +49,7 @@ class ConverterType extends AbstractType
         return 'converter';
     }
 
-    private function getChoicesForCurrency()
+    protected function getChoicesForCurrency()
     {
         return $this->em->getRepository('AppBundle:Currency')->findAllCurrenciesForChoiceField();
     }

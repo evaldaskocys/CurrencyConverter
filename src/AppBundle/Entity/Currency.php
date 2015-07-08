@@ -20,28 +20,28 @@ class Currency
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="source_id", type="integer")
      */
-    private $sourceId;
+    protected $sourceId;
 
     /**
      * @var float
      *
      * @ORM\Column(name="rate", type="float")
      */
-    private $rate;
+    protected $rate;
 
     /**
      * @var string
      *
      * @ORM\Column(name="currency", type="string", length=3)
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\ManyToOne(targetEntity="Source", inversedBy="currencies")
