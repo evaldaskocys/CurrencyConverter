@@ -7,6 +7,9 @@ A Symfony project created on June 29, 2015, 9:24 pm.
 
 ## Requirements
 
+  * Composer
+    * `php -r "readfile('https://getcomposer.org/installer');" | php`
+    * `sudo mv composer.phar /usr/local/bin/composer`
   * NodeJS with NPM
     * `sudo apt-get install nodejs` on Debian based systems
     * Use [Installer from nodejs.org](http://nodejs.org/download/) on Windows
