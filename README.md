@@ -24,4 +24,4 @@ A Symfony project created on June 29, 2015, 9:24 pm.
 ## Usage
 
   * `php app/console doctrine:schema:update --force` to create database schema
-  * `php app/console currency:rate:update` turn everyday cron tab on for this command to insert currencies to database daily
+  * `php app/console currency:rates:update` turn everyday cron tab on for this command to insert currencies to database daily
