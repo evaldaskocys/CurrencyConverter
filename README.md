@@ -13,6 +13,12 @@ A Symfony project created on June 29, 2015, 9:24 pm.
     * `brew install node` on Mac OS X
   * Globally installed Grunt-CLI and Bower packages via NPM
     * `sudo npm install -g grunt-cli bower`
+  * Ruby
+    * `sudo apt-get install ruby` on Debian based systems
+    * Use [Ruby Installer](http://rubyinstaller.org/) on Windows
+    * Mac OS X is shipped with Ruby preinstalled
+  * Compass
+    * `sudo gem install compass`
 
 ## Setting up
 
