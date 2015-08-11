@@ -6,7 +6,7 @@ use AppBundle\Utils\SourceConversionInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
-class Converter {
+class Converter implements ConverterInterface {
 
     protected $response = array(
         'valid' => true,

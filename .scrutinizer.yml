@@ -24,6 +24,14 @@ checks:
         avoid_conflicting_incrementers: true
         assignment_of_null_return: true
 
+tools:
+    php_sim:                true
+    php_cs_fixer:           true
+    php_code_sniffer:       true
+    php_mess_detector:      true
+    php_pdepend:            true
+    php_analyzer:           true
+
 filter:
     paths:
         - 'src/*'
