@@ -1,6 +1,8 @@
 CurrencyConverter
 =================
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/?branch=master)
+
 PHP application that converts amount from one currency to another.
 
 A Symfony project created on June 29, 2015, 9:24 pm.
