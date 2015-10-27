@@ -5,8 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ServiceRepository
- *
+ * ServiceRepository.
  */
 class CurrencyRepository extends EntityRepository
 {
@@ -14,6 +13,7 @@ class CurrencyRepository extends EntityRepository
      * @param $date
      * @param $shortName
      * @param $currency
+     *
      * @return mixed
      */
     public function findRateByDateAndShortNameAndCurrency($date, $shortName, $currency)
@@ -22,7 +22,7 @@ class CurrencyRepository extends EntityRepository
             ->createQueryBuilder()
             ->select('c')
             ->from('AppBundle:Currency', 'c')
-            ->innerJoin('c.source','s')
+            ->innerJoin('c.source', 's')
             ->where('s.createdAt = :date')
             ->andWhere('s.shortCode = :short_code')
             ->andWhere('c.currency = :currency')
@@ -31,6 +31,7 @@ class CurrencyRepository extends EntityRepository
             ->setParameter('currency', $currency)
             ->setMaxResults(1)
             ->getQuery();
+
         return $query->getOneOrNullResult();
     }
 
@@ -46,9 +47,10 @@ class CurrencyRepository extends EntityRepository
             ->getQuery();
 
         $currencyChoices = array();
-        foreach($query->getResult() as $uniqueCurrency){
+        foreach ($query->getResult() as $uniqueCurrency) {
             $currencyChoices[$uniqueCurrency['currency']] = $uniqueCurrency['currency'];
         }
+
         return $currencyChoices;
     }
 }

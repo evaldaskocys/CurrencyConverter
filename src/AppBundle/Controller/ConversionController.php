@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 class ConversionController extends Controller
 {
     /**
-     * Converts currencies and outputs result in json format
+     * Converts currencies and outputs result in json format.
      *
      * @param Request $request
+     *
      * @return JsonResponse
+     *
      * @throws \Exception
      *
      * @Route("/convert_currency/ECB/", name="convertCurrency", options={"expose"=true})
@@ -29,6 +31,7 @@ class ConversionController extends Controller
 
         $response = new JsonResponse();
         $response->setData($result);
+
         return $response;
     }
 }

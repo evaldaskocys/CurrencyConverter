@@ -4,10 +4,10 @@ namespace AppBundle\Utils;
 
 class ECBConversionStrategy implements SourceConversionInterface
 {
-    const SHORT_NAME = "ECB";
+    const SHORT_NAME = 'ECB';
     const DECIMAL = 2;
-    const POINT = ".";
-    const THOUSANDS_SEP = "";
+    const POINT = '.';
+    const THOUSANDS_SEP = '';
     const ROUND = PHP_ROUND_HALF_UP;
 
     public function getShortName()

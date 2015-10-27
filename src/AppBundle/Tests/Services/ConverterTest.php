@@ -9,6 +9,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider inputDataProvider
+     *
      * @param $sourceCode
      * @param $date
      * @param $amount
@@ -40,7 +41,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
 
         $currencyRepository = $this
             ->getMockBuilder('\Doctrine\ORM\EntityRepository')
-            ->setMethods(array('findRateByDateAndShortNameAndCurrency',))
+            ->setMethods(array('findRateByDateAndShortNameAndCurrency'))
             ->disableOriginalConstructor()
             ->getMock();
         $currencyRepository->expects($this->at(0))
@@ -90,7 +91,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
                     'amount' => '14.59',
                     'currency' => 'USD',
                     'message' => '',
-                )
+                ),
             ),
             array(
                 'ECB',
@@ -105,7 +106,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
                     'amount' => '9.45',
                     'currency' => 'GBP',
                     'message' => '',
-                )
+                ),
             ),
             array(
                 'ECB',
@@ -120,9 +121,8 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
                     'amount' => '1.27',
                     'currency' => 'GBP',
                     'message' => '',
-                )
+                ),
             ),
         );
     }
-
 }

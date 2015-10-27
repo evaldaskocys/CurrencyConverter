@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Currency
+ * Currency.
  *
  * @ORM\Table(name="currency", indexes={@ORM\Index(name="currencyIndex", columns={"currency"})})
  * @ORM\Entity(repositoryClass="AppBundle\Entity\CurrencyRepository")
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Currency
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,7 +23,7 @@ class Currency
     protected $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="source_id", type="integer")
      */
@@ -50,9 +50,9 @@ class Currency
     protected $source;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -60,9 +60,10 @@ class Currency
     }
 
     /**
-     * Set sourceId
+     * Set sourceId.
      *
-     * @param integer $sourceId
+     * @param int $sourceId
+     *
      * @return Currency
      */
     public function setSourceId($sourceId)
@@ -73,9 +74,9 @@ class Currency
     }
 
     /**
-     * Get sourceId
+     * Get sourceId.
      *
-     * @return integer 
+     * @return int
      */
     public function getSourceId()
     {
@@ -83,9 +84,10 @@ class Currency
     }
 
     /**
-     * Set rate
+     * Set rate.
      *
      * @param float $rate
+     *
      * @return Currency
      */
     public function setRate($rate)
@@ -96,9 +98,9 @@ class Currency
     }
 
     /**
-     * Get rate
+     * Get rate.
      *
-     * @return float 
+     * @return float
      */
     public function getRate()
     {
@@ -106,9 +108,10 @@ class Currency
     }
 
     /**
-     * Set currency
+     * Set currency.
      *
      * @param string $currency
+     *
      * @return Currency
      */
     public function setCurrency($currency)
@@ -119,9 +122,9 @@ class Currency
     }
 
     /**
-     * Get currency
+     * Get currency.
      *
-     * @return string 
+     * @return string
      */
     public function getCurrency()
     {
@@ -134,12 +137,13 @@ class Currency
     }
 
     /**
-     * Set source
+     * Set source.
      *
      * @param \AppBundle\Entity\Source $source
+     *
      * @return Currency
      */
-    public function setSource(\AppBundle\Entity\Source $source = null)
+    public function setSource(Source $source = null)
     {
         $this->source = $source;
 
@@ -147,9 +151,9 @@ class Currency
     }
 
     /**
-     * Get source
+     * Get source.
      *
-     * @return \AppBundle\Entity\Source 
+     * @return \AppBundle\Entity\Source
      */
     public function getSource()
     {

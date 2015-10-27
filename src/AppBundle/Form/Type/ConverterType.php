@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-
 class ConverterType extends AbstractType
 {
     protected $em;
@@ -26,21 +25,21 @@ class ConverterType extends AbstractType
                     'widget' => 'single_text',
                     'format' => 'yyyy-MM-dd',
                     'data' => new \DateTime(),
-                    'attr' => array('class'=>'disable-enter calculate-select'),
+                    'attr' => array('class' => 'disable-enter calculate-select'),
                 ))
             ->add('sellCurrency', 'choice', array(
                     'choices' => $this->choicesForCurrency,
                     'label' => 'Parduodama valiuta',
-                    'attr' => array('class'=>'disable-enter calculate-select'),
+                    'attr' => array('class' => 'disable-enter calculate-select'),
                 ))
             ->add('amount', 'number', array(
                     'label' => 'Parduodama suma',
-                    'attr' => array('class'=>'disable-enter allow-numbers'),
+                    'attr' => array('class' => 'disable-enter allow-numbers'),
                 ))
             ->add('buyCurrency', 'choice', array(
                     'choices' => $this->choicesForCurrency,
                     'label' => 'Perkama valiuta',
-                    'attr' => array('class'=>'disable-enter calculate-select'),
+                    'attr' => array('class' => 'disable-enter calculate-select'),
                 ));
     }
 

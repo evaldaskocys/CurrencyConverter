@@ -2,11 +2,10 @@
 
 namespace AppBundle\Services;
 
-
 use AppBundle\Utils\ECBCrawlerStrategy;
 
-class Crawler {
-
+class Crawler
+{
     protected $crawlerStrategy;
 
     /**

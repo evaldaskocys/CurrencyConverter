@@ -2,8 +2,8 @@
 
 namespace AppBundle\Utils;
 
-interface SourceConversionInterface {
-
+interface SourceConversionInterface
+{
     public function getShortName();
 
     public function getDecimal();
@@ -13,5 +13,4 @@ interface SourceConversionInterface {
     public function getThousandsSep();
 
     public function getRoundMode();
-
 }

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Source
+ * Source.
  *
  * @ORM\Table(name="source")
  * @ORM\Entity()
@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Source
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -49,9 +49,9 @@ class Source
     protected $currencies;
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -59,9 +59,10 @@ class Source
     }
 
     /**
-     * Set shortCode
+     * Set shortCode.
      *
      * @param string $shortCode
+     *
      * @return Source
      */
     public function setShortCode($shortCode)
@@ -72,9 +73,9 @@ class Source
     }
 
     /**
-     * Get shortCode
+     * Get shortCode.
      *
-     * @return string 
+     * @return string
      */
     public function getShortCode()
     {
@@ -82,9 +83,10 @@ class Source
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
+     *
      * @return Source
      */
     public function setUrl($url)
@@ -95,9 +97,9 @@ class Source
     }
 
     /**
-     * Get url
+     * Get url.
      *
-     * @return string 
+     * @return string
      */
     public function getUrl()
     {
@@ -105,7 +107,7 @@ class Source
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @return Source
      * @ORM\PrePersist
@@ -118,16 +120,16 @@ class Source
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -135,9 +137,10 @@ class Source
     }
 
     /**
-     * Add currencies
+     * Add currencies.
      *
      * @param \AppBundle\Entity\Currency $currencies
+     *
      * @return Source
      */
     public function addCurrency(\AppBundle\Entity\Currency $currencies)
@@ -148,7 +151,7 @@ class Source
     }
 
     /**
-     * Remove currencies
+     * Remove currencies.
      *
      * @param \AppBundle\Entity\Currency $currencies
      */
@@ -158,9 +161,9 @@ class Source
     }
 
     /**
-     * Get currencies
+     * Get currencies.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getCurrencies()
     {

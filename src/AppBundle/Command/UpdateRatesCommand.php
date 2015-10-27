@@ -5,7 +5,6 @@ namespace AppBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use AppBundle\Entity\Source;
 use AppBundle\Entity\Currency;
 
@@ -35,7 +34,7 @@ class UpdateRatesCommand extends ContainerAwareCommand
             $em->persist($currency);
         }
         $em->flush();
-        $output->writeln('Updated currency rates for ' . $crawler->getLongName() . '.');
+        $output->writeln('Updated currency rates for '.$crawler->getLongName().'.');
     }
 
     protected function createSource($sourceShortName, $remoteUrl)
@@ -43,6 +42,7 @@ class UpdateRatesCommand extends ContainerAwareCommand
         $source = new Source();
         $source->setShortCode($sourceShortName)
             ->setUrl($remoteUrl);
+
         return $source;
     }
 
@@ -52,6 +52,7 @@ class UpdateRatesCommand extends ContainerAwareCommand
         $currency->setSource($source)
             ->setRate($rate)
             ->setCurrency($currencyCode);
+
         return $currency;
     }
 
