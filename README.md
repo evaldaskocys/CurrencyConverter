@@ -2,6 +2,7 @@ CurrencyConverter
 =================
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/evaldaskocys/CurrencyConverter/?branch=master)
 [![Build Status](https://travis-ci.org/evaldaskocys/CurrencyConverter.svg?branch=master)](https://travis-ci.org/evaldaskocys/CurrencyConverter)
 
 PHP application that converts amount from one currency to another.
