@@ -31,6 +31,7 @@ tools:
     php_mess_detector:      true
     php_pdepend:            true
     php_analyzer:           true
+    external_code_coverage: true
 
 filter:
     paths:
