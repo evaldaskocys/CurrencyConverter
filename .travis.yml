@@ -17,7 +17,6 @@ script:
     - php app/console doctrine:schema:drop --force
     - php app/console doctrine:schema:create
     - php app/console doctrine:schema:update --force
-    - php app/console doctrine:fixtures:load --no-interaction
     - phpunit -c app --coverage-clover=coverage.clover
 
 after_script:
