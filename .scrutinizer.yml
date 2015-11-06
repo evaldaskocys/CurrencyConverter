@@ -1,5 +1,6 @@
 filter:
-    excluded_paths: [tests/*]
+    paths:
+        - 'src/*'
 checks:
     php:
         code_rating: true
