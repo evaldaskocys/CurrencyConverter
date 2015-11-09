@@ -3,6 +3,7 @@
 namespace AppBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use AppBundle\Entity\Currency;
 
 class ProductRepositoryFunctionalTest extends KernelTestCase
 {
@@ -10,8 +11,6 @@ class ProductRepositoryFunctionalTest extends KernelTestCase
      * @var \Doctrine\ORM\EntityManager
      */
     private $em;
-    private $shortName = 'ECB';
-    private $currency = 'EUR';
 
     /**
      * {@inheritDoc}
@@ -25,15 +24,22 @@ class ProductRepositoryFunctionalTest extends KernelTestCase
         ;
     }
 
-    public function testFindRateByDateAndShortNameAndCurrency()
+    /**
+     * @dataProvider inputDataProvider
+     *
+     * @param $date
+     * @param $shortName
+     * @param $currency
+     */
+    public function testFindRateByDateAndShortNameAndCurrency($date, $shortName, $currency)
     {
-        $date = new \DateTime();
-        $products = $this->em
+        /** @var Currency $currency */
+        $currency = $this->em
             ->getRepository('AppBundle:Currency')
-            ->findRateByDateAndShortNameAndCurrency($date->format('Y-m-d'), $this->shortName, $this->currency)
+            ->findRateByDateAndShortNameAndCurrency($date->format('Y-m-d'), $shortName, $currency)
         ;
 
-        $this->assertTrue((is_null($products) || count($products) == 1));
+        $this->assertTrue((is_null($currency) || $currency instanceof Currency));
     }
 
     public function testFindAllCurrenciesForChoiceField()
@@ -44,6 +50,23 @@ class ProductRepositoryFunctionalTest extends KernelTestCase
         ;
 
         $this->assertInternalType('array', $currencies);
+    }
+
+    public function inputDataProvider()
+    {
+        $date = new \DateTime();
+        return array(
+            array(
+                $date,
+                'ECB',
+                'EUR',
+            ),
+            array(
+                $date,
+                'ECB',
+                'USD',
+            ),
+        );
     }
 
     /**

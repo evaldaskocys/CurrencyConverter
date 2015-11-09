@@ -9,7 +9,9 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class UpdateRatesCommandTest extends KernelTestCase
 {
-    public function testExecute()
+    protected $command;
+
+    public function setUp()
     {
         $kernel = $this->createKernel();
         $kernel->boot();
@@ -30,9 +32,13 @@ class UpdateRatesCommandTest extends KernelTestCase
         $application = new Application($kernel);
         $application->add(new UpdateRatesCommand());
 
-        $command = $application->find('currency:rates:update');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute(array('command' => $command->getName()));
+        $this->command = $application->find('currency:rates:update');
+    }
+
+    public function testExecute()
+    {
+        $commandTester = new CommandTester($this->command);
+        $commandTester->execute(array('command' => $this->command->getName()));
 
         $this->assertRegExp('/Updated currency rates for (.*)./', $commandTester->getDisplay());
     }

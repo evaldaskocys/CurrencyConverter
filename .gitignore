@@ -67,3 +67,6 @@
 # Backup files
 /*~
 *~
+
+# Coverage files
+/coverage/
