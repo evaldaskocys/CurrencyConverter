@@ -23,21 +23,26 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
     {
         $strategy = new ECBConversionStrategy();
 
-        $currencyEUR = $this->getMock('\AppBundle\Entity\Currency');
-        $currencyEUR->expects($this->any())
-            ->method('getRate')
-            ->will($this->returnValue($rateFrom));
-        $currencyEUR->expects($this->any())
-            ->method('getCurrency')
-            ->will($this->returnValue($currencyCodeFrom));
+        if ($date == '2014-01-01') {
+            $currencyFrom = null;
+            $currencyTo = null;
+        } else {
+            $currencyFrom = $this->getMock('\AppBundle\Entity\Currency');
+            $currencyFrom->expects($this->any())
+                ->method('getRate')
+                ->will($this->returnValue($rateFrom));
+            $currencyFrom->expects($this->any())
+                ->method('getCurrency')
+                ->will($this->returnValue($currencyCodeFrom));
 
-        $currencyUSD = $this->getMock('\AppBundle\Entity\Currency');
-        $currencyUSD->expects($this->any())
-            ->method('getRate')
-            ->will($this->returnValue($rateTo));
-        $currencyUSD->expects($this->any())
-            ->method('getCurrency')
-            ->will($this->returnValue($currencyCodeTo));
+            $currencyTo = $this->getMock('\AppBundle\Entity\Currency');
+            $currencyTo->expects($this->any())
+                ->method('getRate')
+                ->will($this->returnValue($rateTo));
+            $currencyTo->expects($this->any())
+                ->method('getCurrency')
+                ->will($this->returnValue($currencyCodeTo));
+        }
 
         $currencyRepository = $this
             ->getMockBuilder('\Doctrine\ORM\EntityRepository')
@@ -47,12 +52,12 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $currencyRepository->expects($this->at(0))
             ->method('findRateByDateAndShortNameAndCurrency')
             ->with($date, $sourceCode, $currencyCodeFrom)
-            ->will($this->returnValue($currencyEUR));
+            ->will($this->returnValue($currencyFrom));
 
         $currencyRepository->expects($this->at(1))
             ->method('findRateByDateAndShortNameAndCurrency')
             ->with($date, $sourceCode, $currencyCodeTo)
-            ->will($this->returnValue($currencyUSD));
+            ->will($this->returnValue($currencyTo));
 
         // Create a map of arguments to return values.
         /*$map = array(
@@ -151,6 +156,21 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
                     'amount' => 0,
                     'currency' => '',
                     'message' => '',
+                ),
+            ),
+            array(
+                'ECB',
+                '2014-01-01',
+                '10',
+                'DKK',
+                'GBP',
+                7.4614,
+                0.7077,
+                array(
+                    'valid' => false,
+                    'amount' => 0,
+                    'currency' => '',
+                    'message' => 'Valiutos DKK kursas 2014-01-01 datai nerastas. Valiutos GBP kursas 2014-01-01 datai nerastas. ',
                 ),
             ),
         );

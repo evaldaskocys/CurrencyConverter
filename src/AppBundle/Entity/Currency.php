@@ -52,6 +52,7 @@ class Currency
     /**
      * Get id.
      *
+     * @codeCoverageIgnore
      * @return int
      */
     public function getId()
@@ -61,6 +62,8 @@ class Currency
 
     /**
      * Set sourceId.
+     *
+     * @codeCoverageIgnore
      *
      * @param int $sourceId
      *
@@ -75,6 +78,8 @@ class Currency
 
     /**
      * Get sourceId.
+     *
+     * @codeCoverageIgnore
      *
      * @return int
      */

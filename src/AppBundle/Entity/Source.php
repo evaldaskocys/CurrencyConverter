@@ -51,6 +51,8 @@ class Source
     /**
      * Get id.
      *
+     * @codeCoverageIgnore
+     *
      * @return int
      */
     public function getId()
