@@ -139,13 +139,13 @@ class Source
     /**
      * Add currencies.
      *
-     * @param \AppBundle\Entity\Currency $currencies
+     * @param \AppBundle\Entity\Currency $currency
      *
      * @return Source
      */
-    public function addCurrency(\AppBundle\Entity\Currency $currencies)
+    public function addCurrency(Currency $currency)
     {
-        $this->currencies[] = $currencies;
+        $this->currencies[] = $currency;
 
         return $this;
     }
@@ -153,11 +153,11 @@ class Source
     /**
      * Remove currencies.
      *
-     * @param \AppBundle\Entity\Currency $currencies
+     * @param \AppBundle\Entity\Currency $currency
      */
-    public function removeCurrency(\AppBundle\Entity\Currency $currencies)
+    public function removeCurrency(Currency $currency)
     {
-        $this->currencies->removeElement($currencies);
+        $this->currencies->removeElement($currency);
     }
 
     /**

@@ -131,10 +131,6 @@ class Currency
         return $this->currency;
     }
 
-    public function __toString()
-    {
-        return $this->getCurrency();
-    }
 
     /**
      * Set source.
@@ -146,6 +142,7 @@ class Currency
     public function setSource(Source $source = null)
     {
         $this->source = $source;
+        $source->addCurrency($this);
 
         return $this;
     }
