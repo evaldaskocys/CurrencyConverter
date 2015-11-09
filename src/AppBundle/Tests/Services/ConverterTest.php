@@ -59,14 +59,6 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             ->with($date, $sourceCode, $currencyCodeTo)
             ->will($this->returnValue($currencyTo));
 
-        // Create a map of arguments to return values.
-        /*$map = array(
-            array($date, $sourceCode, $currencyCodeFrom, $currencyUSD),
-            array($date, $sourceCode, $currencyCodeTo, $currencyEUR),
-        );
-        $currencyRepository->method('findRateByDateAndShortNameAndCurrency')
-            ->will($this->returnValueMap($map));*/
-
         $mockManager = $this
             ->getMockBuilder('\Doctrine\Common\Persistence\ObjectManager')
             ->disableOriginalConstructor()
@@ -101,52 +93,7 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             array(
                 'ECB',
                 '2015-07-07',
-                '13.35',
-                'EUR',
-                'GBP',
-                1,
-                0.7077,
-                array(
-                    'valid' => true,
-                    'amount' => 9.45,
-                    'currency' => 'GBP',
-                    'message' => '',
-                ),
-            ),
-            array(
-                'ECB',
-                '2015-07-07',
-                '13.35',
-                'DKK',
-                'GBP',
-                7.4614,
-                0.7077,
-                array(
-                    'valid' => true,
-                    'amount' => 1.27,
-                    'currency' => 'GBP',
-                    'message' => '',
-                ),
-            ),
-            array(
-                'ECB',
-                '2015-07-07',
                 'asddf',
-                'DKK',
-                'GBP',
-                7.4614,
-                0.7077,
-                array(
-                    'valid' => false,
-                    'amount' => 0,
-                    'currency' => '',
-                    'message' => '',
-                ),
-            ),
-            array(
-                'ECB',
-                '2015-07-07',
-                '-20',
                 'DKK',
                 'GBP',
                 7.4614,

@@ -14,7 +14,7 @@ class SourceTest extends \PHPUnit_Framework_TestCase
         $this->source = new Source();
         $this->source->setShortCode('ECB')
             ->setUrl('http://www.tst.com')
-            ->setCreatedAt($date = new \DateTime(''));
+            ->setCreatedAt();
         $currencyEur = new Currency();
         $currencyEur->setCurrency('EUR')
             ->setRate(1);
